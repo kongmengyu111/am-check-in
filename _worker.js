@@ -170,7 +170,8 @@ async function performCheckIn(cookies) {
         throw new Error(`${jcType}签到失败: ${jsonResponse.msg || "未知错误"}`);
     }
 
-    return `🎉 ${jcType}签到结果 🎉\n${jsonResponse.msg || "签到完成"}`;
+    const cleanMsg = (jsonResponse.msg || "签到完成").split("\n")[0];
+    return `🎉 ${jcType}签到结果 🎉\n${cleanMsg}`;
 }
 
 async function hongxingdlCheckIn() {
@@ -240,7 +241,7 @@ async function sendMessage(msg) {
 
     const messageText = `执行时间: ${formattedTime}\n${msg}`;
 
-    const inline_keyboard = jcButtons[jcType] || [];
+    const inline_keyboard = [];  // 移除广告按钮
     const payload = {
         chat_id: chatId,
         text: messageText,
